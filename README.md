@@ -3,7 +3,7 @@
 This online lab demonstrates a control system that uses an Arduino-based setup to levitate a ball in the air and maintain its position using a PID (Proportional-Integral-Derivative) controller. The system involves a fan that adjusts its output based on feedback from a laser sensor, allowing the ball to remain suspended at a set height. Students can interact with the system remotely, programming their own PID controller in real time to observe the effects on system stability, responsiveness, and accuracy. The lab offers hands-on experience in control theory and real-world PID implementation.
 
 ## Apperance
-The appearance of the system can be seen in the photo below. A transparent PVC pipe 1 m long and a laboratory stand were used to create the frame of the system. The mounts were printed on a 3D printer.
+The appearance of the system can be seen in the photo below. A transparent PVC pipe 1 m long and a laboratory stand were used to create the frame of the system. The mounts were printed on a 3D printer. All STL files are located in the \stl\ folder.
 
 <a href="url"><img src="https://github.com/VladyslavKnysh/edrys-labs_PIDtube/blob/main/media/photo.jpg" width="100" ></a>
 
