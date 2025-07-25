@@ -23,6 +23,8 @@ To build similar laboratory equipment next items:
 | Ball                 | Ping-pong ball       | One and only                                                   | Acts as a liftable object                              |
 | Cam                  | USB web-cam          | Any USB web-cam                                                | Shows the expirement to the whole wide world           |
 
+It should be noted that the thrust of the system greatly depends on the motor parameters, i.e., a more powerful motor will require lower coefficients and vice versa.
+
 ## Schematic
 You can see the full electrical schematil on the picture lower:
 
