@@ -1,0 +1,101 @@
+{
+  "id": "VVFzgyp4Rns9TMXY",
+  "createdBy": "MHhLOiC6Lbr0",
+  "dateCreated": 1689064662293,
+  "name": "Arduino - PID Tube",
+  "meta": {
+    "logo": "https://raw.githubusercontent.com/VladyslavKnysh/edrys-labs_PIDtube/refs/heads/main/media/TUBE.drawing.png",
+    "description": "This online lab demonstrates a control system that uses an Arduino-based setup to levitate a ball in the air and maintain its position using a PID (Proportional-Integral-Derivative) controller. The system involves a fan that adjusts its output based on feedback from a laser sensor, allowing the ball to remain suspended at a set height. Students can interact with the system remotely, programming their own PID controller in real time to observe the effects on system stability, responsiveness, and accuracy. The lab offers hands-on experience in control theory and real-world PID implementation.\n\n",
+    "selfAssign": true,
+    "defaultNumberOfRooms": "0",
+    "id": "79sFHo6ONB1S25cTN7emXmOibQ2HNWb2G9X3Xn2x"
+  },
+  "members": {
+    "teacher": [
+      "BrzW9fREmtys",
+      "fF6qHw6EaHrr"
+    ],
+    "student": []
+  },
+  "modules": [
+    {
+      "url": "https://edrys-labs.github.io/module-markdown-it/index.html",
+      "config": {
+        "content": "# Introduction to proportional–integral–derivative controller\n\n## PID controller\n\nMachines and processes that need constant management and automated modification are frequently managed with a feedback-based control loop mechanism called a proportional-integral-derivative (PID) controller.\n - The present set point (SP) − process variable (PV) error value is proportional to term P.\n - Term I generates the I term by integrating the past values of the SP − PV error over time.\n - Term D is the best estimate of the SP − PV error's future trend.\n \n ## Hardware\n \n In this experiment the motor with propeller is used to create air flow that will overcome the gravitation and rise the ball up into the air to the set point level inside an aerodynamic tune. \n On the picture bellow is showed hardware scheme of the experiment.\n \n <img src =\"https://raw.githubusercontent.com/VladyslavKnysh/edrys-labs_PIDtube/refs/heads/main/media/TubeSchematic.png\" alt=\"Hardware scheme\"  width=\"666\" height=\"800\">\n <img src =\"https://raw.githubusercontent.com/VladyslavKnysh/edrys-labs_PIDtube/refs/heads/main/media/TUBE.drawing.png\" alt=\"Tube scheme\"  width=\"250\" height=\"300\">\n \n ## Assignment\n \n In this experiment students are tasked with controlling the affromentioned tube system. The expeiment is separeted into 4 parts:\n - Direct controll \n - P + direct controll \n - PD + direct controll \n - PID + direct controll"
+      },
+      "studentConfig": {
+        "content": ""
+      },
+      "teacherConfig": {
+        "content": ""
+      },
+      "stationConfig": {
+        "content": ""
+      },
+      "showInCustom": "lobby",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "url": "https://edrys-labs.github.io/module-markdown-it/index.html",
+      "config": {
+        "content": "# Proportional–integral–derivative controller\n## Step 1: Direct control of the motor\n\n**Objective**: To find the coefficient of direct control.\n\n1. **Prepare the sketch**:\n\n    - Write the primary sketch that will help you use PWM of the Arduino`s D3 pin to controll the motor speed.\n     \n2. **Find the coefficient**:\n\n    - There are two main possible roots of performing this task: \n       a) You can start from 0 and gradually increase the pwm value until the ball almost rises up into the air;\n       b) Or you can start from the 255 and gradually decrease the pwm value until the ball almost rises up into the air;\n\n3. **Write down the result**: \n\n    - Write down the coefficient that was found. It will be used in the next tests.\n\n## Step 2: Proportional controller\n\n**Objective**: To program the algorithm of the Proportional controller. and to find the KP value with low steady state error.\n\n  <img src=\"https://raw.githubusercontent.com/VladyslavKnysh/edrys-labs_PIDtube/refs/heads/main/media/TubeFR_P.png\" alt=\"P scheme\">\n\n1. **Modify Your Code**:\n\n    - Add the following lines to enable laser-ranging module VL53L0X:\n\n       ```cpp\n      #include <Wire.h>\n      #include <VL53L0X.h>\n    \n      VL53L0X sensor;\n    \n        //Enter your global variables here\n    \n      // the setup function runs once when you press reset or power the board\n      void setup() {\n        Serial.begin(9600);\n        Wire.begin();\n    \n        sensor.setTimeout(500);\n        if (!sensor.init())\n        {\n          Serial.println(\"Failed to detect and initialize sensor!\");\n          while (1) {}\n        }\n       ```\n\n2. **Make motorCMD dynamic**:\n\n    - Use while loop to perform experiment.  The experiment should be around 15-30  seconds long.\n    - motorCMD should change proportionaly to the errorValue.\n    - Due to the position of the VL53L0X errorValue can be calculated as follows: 975 - errorValue .\n    - Experiment with the KP value to achive lower stady state error. \n\n## Step 3: Proportional-derivative controller\n\n**Objective**: To add derivative controll to stabilize the system.\n\n  <img src=\"https://raw.githubusercontent.com/VladyslavKnysh/edrys-labs_PIDtube/refs/heads/main/media/TubeFR_PD.png\" alt=\"PD scheme\">\n\n1. **Understand the derivative controller**:\n\n    - Based on the SetPoint − realPosition error's current rate of change, derivative controller represents the best prediction of its future trend. \n    - i.e. the relation between Change In Error and Change In Time\n    - $(Error_i-Error_{i-1})/(dt*i)$\n\n2. **Implement the derivative control**:\n\n    - Modify the existing loop to use the PD controller.\n    - To make the loops more consistent, you should implement a second timer so that each iteration takes the same time.\n    - Try to find the best combination of $kp$ and $kd$ coefficients for a fast rise time with not too much overshoot and low steady state error.\n\n\n  ## Step 4: Proportional-integral-derivative controller\n\n**Objective**: To reduce the steady state error by adding the integral controll.\n\n  <img src=\"https://raw.githubusercontent.com/VladyslavKnysh/edrys-labs_PIDtube/refs/heads/main/media/TubeFR_PID.png\" alt=\"PID scheme\">\n\n1. **Understand the integral controller**:\n\n  - Integral term sums up all past errors.\n  - You can calculate KI sa follows $KI_i=KI_{i-1}+dt*ki*Error_i$ , where $ki$ is the chosen coefficient of the itegral controller\n  \n2. **Implement the derivative control**:\n - Implement the PID + direct controller.\n - Try to find the best combination of $kp$,$ki$ and $kd$ coefficients for the best performance.\n\n### Wrap-Up\n  Congratulations! You have successfully completed the proportional–integral–derivative controller experiment!"
+      },
+      "studentConfig": {
+        "content": ""
+      },
+      "teacherConfig": {
+        "content": ""
+      },
+      "stationConfig": {
+        "content": "## Instructions for Station-Sharing \n\nYou are currently responsible for sharing a station of this lab.\nYou have multiple options to share a or your terminal.\nTherefor we use the pyxtermjs - terminal server from:\n\nhttps://github.com/edrys-labs/module-pyxtermjs\n\n### Using Docker\n\nIf you haven't done it so far, install [docker](https://docs.docker.com/engine/install/).\nOr, follow one of the instruction-videos for your system:\n\n<details>\n<summary>Install Docker on Linux</summary>  \n<iframe\n  style=\"width: 100%; aspect-ratio: 16 / 9\"\n  src=\"https://www.youtube.com/embed/cqbh-RneBlk?si=juvUM5d2OSZ28WBv\"\n  title=\"YouTube video player\"\n  frameborder=\"0\"\n  allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"\n  referrerpolicy=\"strict-origin-when-cross-origin\"\n  allowfullscreen></iframe>\n</details>\n\n<details>\n<summary>Install Docker on Windows</summary>\n<iframe\n  style=\"width: 100%; aspect-ratio: 16 / 9\"\n  src=\"https://www.youtube.com/embed/WDEdRmTCSs8?si=X0agStn1akNcZLGu\"\n  title=\"YouTube video player\"\n  frameborder=\"0\"\n  allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"\n  referrerpolicy=\"strict-origin-when-cross-origin\"\n  allowfullscreen></iframe>\n</details>\n\n<details>\n<summary>Install Docker on MacOS</summary>\n<iframe\n  style=\"width: 100%; aspect-ratio: 16 / 9\"\n  src=\"https://www.youtube.com/embed/-EXlfSsP49A?si=OZ_l4_2hDKb6ULQ_\"\n  title=\"YouTube video player\"\n  frameborder=\"0\"\n  allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"\n  referrerpolicy=\"strict-origin-when-cross-origin\"\n  allowfullscreen></iframe>\n</details>\n\nThen the only thing that is required is to run the following command:\n\n```bash\ndocker run -it -p 5000:5000 --device=/dev/ttyACM0:/dev/ttyACM0 crosslab/edrys_pyxtermjs_arduino:latest\n```\nor (The choice of the comand is depending on your arduino board)\n```bash\ndocker run -it -p 5000:5000 --device=/dev/ttyUSB0:/dev/ttyUSB0 crosslab/edrys_pyxtermjs_arduino:latest\n```\n\nThis will download the pyxtermjs terminal-server from docker-hub and run it in a secure environment.\n### Using Python\n\nYou can also share your terminal directly via Python, visit the following project\n\nhttps://github.com/edrys-labs/module-pyxtermjs\n\n... the easiest way is to perform the following steps:\n\n``` bash\n# 1. clone the repository or download the folder manually\ngit clone https://github.com/edrys-labs/module-pyxtermjs\n\n# 2. install all required sources\npip3 install -r requirements.txt\n\n# 3. run the terminal-server\npython3 -m pyxtermjs --cors True --command bash --port 5000\n```"
+      },
+      "showInCustom": "station",
+      "width": "full",
+      "height": "medium"
+    },
+    {
+      "url": "https://edrys-labs.github.io/module-editor/index.html",
+      "config": {
+        "editorText": "/*\n  Enter your code here\n  Example code for the VL53L0X by Pololulu: \n  https://github.com/pololu/vl53l0x-arduino/blob/master/examples/Continuous/Continuous.ino\n  The Position Error can be calculated as \"975 - sensor.readRangeContinuousMillimeters()\"\n  If \"Failed to detect and initialize sensor!\" string is visible in \n  the serial monitor try reuploading the code. \n  If this does not fix the problem contact the station operator. \n*/\n\n#include <Wire.h>\n#include <VL53L0X.h>\n\nVL53L0X sensor;\n\n  //Enter your global variables here\n\n// the setup function runs once when you press reset or power the board\nvoid setup() {\n  Serial.begin(9600);\n  Wire.begin();\n\n  sensor.setTimeout(500);\n  if (!sensor.init())\n  {\n    Serial.println(\"Failed to detect and initialize sensor!\");\n    while (1) {}\n  }\n\n  // Start continuous back-to-back mode (take readings as\n  // fast as possible).  To use continuous timed mode\n  // instead, provide a desired inter-measurement period in\n  // ms (e.g. sensor.startContinuous(100)).\n  sensor.startContinuous();\n}\n\n// the loop function runs over and over again forever\nvoid loop() {\n    // put your main code here, to run repeatedly:\nif(Serial.available()>0){\n  int task = Serial.parseInt();\n  if(task>0){\n  \n  }\n }\n",
+        "runCommand": "execute",
+        "language": "cpp",
+        "theme": "light"
+      },
+      "showInCustom": "station",
+      "width": 750,
+      "height": "medium"
+    },
+    {
+      "url": "https://edrys-labs.github.io/module-pyxtermjs/index.html",
+      "stationConfig": {
+        "server": "http://localhost:5000/pty",
+        "execute": "execute",
+        "script": "echo $CODE | base64 --decode > tube_sketch.ino\narduino-cli lib install \"VL53L0X\"  && arduino-cli sketch new tube_sketch\nolddir=$(pwd)\nmv tube_sketch.ino tube_sketch\ncd tube_sketch\narduino-cli board attach -p /dev/ttyUSB0 -b arduino:avr:nano:cpu=atmega328old\ncd $olddir\narduino-cli compile tube_sketch  && arduino-cli upload -p /dev/ttyUSB0 tube_sketch && arduino-cli monitor -p /dev/ttyUSB0 \n",
+        "enable": {
+          "teacher": true,
+          "student": true
+        }
+      },
+      "showInCustom": "station",
+      "width": 750,
+      "height": "medium"
+    },
+    {
+      "url": "https://module-stream.netlify.app/",
+      "stationConfig": {
+        "video": true,
+        "audio": false,
+        "mirrorX": false,
+        "mirrorY": false,
+        "rotate": 90,
+        "streamMethod": "websocket",
+        "websocketUrl": "wss://ws-stream-server.onrender.com"
+      },
+      "showInCustom": "station",
+      "width": 480,
+      "height": 640
+    }
+  ],
+  "communicationConfig": "N4IgtiBcIOoKYCMDOB7AxgazgFxAGhAHcoiklIB6CuAEwCcBPJAWkMVUx2YAY0AzAIxpuAFj58ArAGYJAOgAWcOigwBXAIYAHTbLQowFEAF8gA"
+}
