@@ -19,7 +19,7 @@ To build similar laboratory equipment next items:
 | Transistor           | IRF520               | Any N-chanel MOSFET with low enough Vgs                        | Controls power supply of a motor                       |
 | Diode                | SF26                 | Any fast diode                                                 | Electrical protection                                  |
 | Laser-ranging module | VL53L0X              | Any similar module                                             | Measures the position of the ball                      |
-| Motor                | 50000RPM drone motor | Any similar fast DC motor                                      | Creates an air flow                                    |
+| Motor                | 50000RPM drone motor | Any similar high-speed DC motor                                | Creates an air flow                                    |
 | Ball                 | Ping-pong ball       | One and only                                                   | Acts as a liftable object                              |
 | Cam                  | USB web-cam          | Any USB web-cam                                                | Shows the expirement to the whole wide world           |
 
