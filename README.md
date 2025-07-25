@@ -16,7 +16,7 @@ To build similar laboratory equipment next items:
 | Component            | Used in example      | Substitution                                                   | Function                                               |
 | :-------------------:|:--------------------:| :--------------------------------------------------------------| :------------------------------------------------------|
 | MCU                  | ArduinoNano          | Any Arduino or ESP board with 5V logic level and PWM functions | Controls the whole system + connects with the terminal |
-| Transistor           | IRF520               | Any N-chanel MOSFET with 5V level with low Vgs                 | Controls power supply of a motor                       |
+| Transistor           | IRF520               | Any N-chanel MOSFET with low enough Vgs                        | Controls power supply of a motor                       |
 | Diode                | SF26                 | Any fast diode                                                 | Electrical protection                                  |
 | Laser-ranging module | VL53L0X              | Any similar module                                             | Measures the position of the ball                      |
 | Motor                | 50000RPM drone motor | Any similar fast DC motor                                      | Creates an air flow                                    |
