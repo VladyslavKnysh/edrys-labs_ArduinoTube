@@ -32,3 +32,5 @@ You can see the full electrical schematil on the picture lower:
 ![alt text](https://github.com/VladyslavKnysh/edrys-labs_PIDtube/blob/main/media/FullSchematic.png)
 
 
+https://github.com/user-attachments/assets/e87ab2ab-11ce-4c1f-ad92-d0ffda92d6e0
+
